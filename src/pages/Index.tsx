@@ -4,6 +4,8 @@ import { Shoe } from "@/types/shoe";
 import { ShoeList } from "@/components/ShoeList";
 import { ShoeFilters } from "@/components/ShoeFilters";
 import { AddShoeDialog } from "@/components/AddShoeDialog";
+import { EditShoeDialog } from "@/components/EditShoeDialog";
+import { useToast } from "@/hooks/use-toast";
 import axios from "axios";
 
 // Exemplo de calçados para demonstração inicial
@@ -53,6 +55,9 @@ const initialShoes: Shoe[] = [
 export default function Index() {
   const [shoes, setShoes] = useState<Shoe[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [editingShoe, setEditingShoe] = useState<Shoe | null>(null);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const { toast } = useToast();
 
   const filteredShoes = shoes.filter((shoe) => {
     const searchLower = searchTerm.toLowerCase();
@@ -64,6 +69,32 @@ export default function Index() {
 
   const handleAddShoe = (newShoe: Shoe) => {
     setShoes([...shoes, newShoe]);
+  };
+
+  const handleEditShoe = (shoe: Shoe) => {
+    setEditingShoe(shoe);
+    setEditDialogOpen(true);
+  };
+
+  const handleDeleteShoe = async (id: string) => {
+    try {
+      await axios.delete(`http://localhost:3000/shoes/${id}`);
+      setShoes(shoes.filter(shoe => shoe.id !== id));
+      toast({
+        title: "Sucesso!",
+        description: "Calçado removido com sucesso.",
+      });
+    } catch (error) {
+      toast({
+        title: "Erro",
+        description: "Erro ao remover calçado.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleShoeUpdated = () => {
+    fetchShoes(); // Recarrega a lista após atualização
   };
 
   async function fetchShoes() {
@@ -92,7 +123,14 @@ export default function Index() {
 
       <ShoeFilters searchTerm={searchTerm} onSearchChange={setSearchTerm} />
       
-      <ShoeList shoes={filteredShoes} />
+      <ShoeList shoes={filteredShoes} onEdit={handleEditShoe} onDelete={handleDeleteShoe} />
+
+      <EditShoeDialog
+        shoe={editingShoe}
+        open={editDialogOpen}
+        onOpenChange={setEditDialogOpen}
+        onShoeUpdated={handleShoeUpdated}
+      />
     </div>
   );
 }

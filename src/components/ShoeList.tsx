@@ -4,9 +4,11 @@ import { ShoeCard } from "./ShoeCard";
 
 interface ShoeListProps {
   shoes: Shoe[];
+  onEdit: (shoe: Shoe) => void;
+  onDelete: (id: string) => void;
 }
 
-export function ShoeList({ shoes }: ShoeListProps) {
+export function ShoeList({ shoes, onEdit, onDelete }: ShoeListProps) {
   if (shoes.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-12 text-center">
@@ -19,7 +21,7 @@ export function ShoeList({ shoes }: ShoeListProps) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
       {shoes.map((shoe) => (
-        <ShoeCard key={shoe.id} shoe={shoe} />
+        <ShoeCard key={shoe.id} shoe={shoe} onEdit={onEdit} onDelete={onDelete} />
       ))}
     </div>
   );

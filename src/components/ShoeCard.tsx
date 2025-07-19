@@ -1,13 +1,17 @@
 
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Shoe } from "@/types/shoe";
+import { Edit, Trash2 } from "lucide-react";
 
 interface ShoeCardProps {
   shoe: Shoe;
+  onEdit: (shoe: Shoe) => void;
+  onDelete: (id: string) => void;
 }
 
-export function ShoeCard({ shoe }: ShoeCardProps) {
+export function ShoeCard({ shoe, onEdit, onDelete }: ShoeCardProps) {
   return (
     <Card className="overflow-hidden transition-all hover:shadow-md hover:shadow-purple-500/20">
       <CardHeader className="p-0">
@@ -36,6 +40,22 @@ export function ShoeCard({ shoe }: ShoeCardProps) {
       </CardContent>
       <CardFooter className="p-4 pt-0 flex justify-between items-center">
         <p className="font-semibold text-lg">R$ {shoe.price.toFixed(2)}</p>
+        <div className="flex gap-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => onEdit(shoe)}
+          >
+            <Edit className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="destructive"
+            size="sm"
+            onClick={() => onDelete(shoe.id)}
+          >
+            <Trash2 className="h-4 w-4" />
+          </Button>
+        </div>
       </CardFooter>
     </Card>
   );

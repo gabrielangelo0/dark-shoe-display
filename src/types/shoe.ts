@@ -6,6 +6,7 @@ export interface Shoe {
   price: number;
   size: number;
   color: string;
-  imageUrl: string;
+  imageUrl?: string;
+  photoUrl?: string;
   inStock: boolean;
 }
