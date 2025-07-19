@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Switch } from "@/components/ui/switch";
 import { Shoe } from "@/types/shoe";
 import { useToast } from "@/hooks/use-toast";
+import axios from "axios";
 
 const shoeFormSchema = z.object({
   name: z.string().min(2, { message: "Nome deve ter pelo menos 2 caracteres" }),
@@ -45,13 +46,18 @@ export function AddShoeDialog({ onAddShoe }: AddShoeDialogProps) {
     },
   });
 
-  function onSubmit(data: ShoeFormValues) {
-    const newShoe: Shoe = {
-      id: Date.now().toString(),
-      ...data,
-      imageUrl: data.imageUrl || "/placeholder.svg",
+  async function onSubmit(data: ShoeFormValues) {
+    const newShoe: any = {
+      name: data.name,
+      brand: data.brand,
+      price: data.price,
+      size: data.size,
+      color: data.color,
+      photoUrl: data.imageUrl,
+      stock: data.inStock,
     };
 
+    await axios.post("http://localhost:3000/shoes", newShoe);
     onAddShoe(newShoe);
     setOpen(false);
     form.reset();

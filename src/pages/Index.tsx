@@ -1,9 +1,10 @@
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Shoe } from "@/types/shoe";
 import { ShoeList } from "@/components/ShoeList";
 import { ShoeFilters } from "@/components/ShoeFilters";
 import { AddShoeDialog } from "@/components/AddShoeDialog";
+import axios from "axios";
 
 // Exemplo de calçados para demonstração inicial
 const initialShoes: Shoe[] = [
@@ -50,7 +51,7 @@ const initialShoes: Shoe[] = [
 ];
 
 export default function Index() {
-  const [shoes, setShoes] = useState<Shoe[]>(initialShoes);
+  const [shoes, setShoes] = useState<Shoe[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredShoes = shoes.filter((shoe) => {
@@ -64,6 +65,20 @@ export default function Index() {
   const handleAddShoe = (newShoe: Shoe) => {
     setShoes([...shoes, newShoe]);
   };
+
+  async function fetchShoes() {
+    try {
+      const shoesResponse = await axios.get("http://localhost:3000/shoes");
+
+      setShoes(shoesResponse.data);
+    } catch (error) {
+      console.error("Erro ao buscar calçados:", error);
+    }
+  }
+
+  useEffect(() => {
+    fetchShoes();
+  }, []);
 
   return (
     <div className="container mx-auto py-8 px-4 max-w-7xl">

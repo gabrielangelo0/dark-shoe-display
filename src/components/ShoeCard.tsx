@@ -13,7 +13,7 @@ export function ShoeCard({ shoe }: ShoeCardProps) {
       <CardHeader className="p-0">
         <div className="relative aspect-square w-full overflow-hidden bg-secondary/50">
           <img
-            src={shoe.imageUrl || "/placeholder.svg"}
+            src={shoe.photoUrl || "/placeholder.svg"}
             alt={shoe.name}
             className="h-full w-full object-cover transition-all hover:scale-105"
           />
