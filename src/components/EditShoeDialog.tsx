@@ -30,7 +30,7 @@ export function EditShoeDialog({ shoe, open, onOpenChange, onShoeUpdated }: Edit
     price: 0,
     size: 0,
     color: "#000000",
-    photoUrl: "",
+    imageUrl: "",
     inStock: true,
   });
 
@@ -43,7 +43,7 @@ export function EditShoeDialog({ shoe, open, onOpenChange, onShoeUpdated }: Edit
         price: shoe.price,
         size: shoe.size,
         color: shoe.color,
-        photoUrl: shoe.photoUrl || "",
+        imageUrl: shoe.imageUrl || "",
         inStock: shoe.inStock,
       });
     }
@@ -60,8 +60,8 @@ export function EditShoeDialog({ shoe, open, onOpenChange, onShoeUpdated }: Edit
         price: formData.price,
         size: formData.size,
         color: formData.color,
-        photoUrl: formData.photoUrl,
-        stock: formData.inStock,
+        imageUrl: formData.imageUrl,
+        inStock: formData.inStock,
       });
 
       toast({
@@ -143,12 +143,12 @@ export function EditShoeDialog({ shoe, open, onOpenChange, onShoeUpdated }: Edit
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="photoUrl">URL da Imagem</Label>
+            <Label htmlFor="imageUrl">URL da Imagem</Label>
             <Input
-              id="photoUrl"
+              id="imageUrl"
               type="url"
-              value={formData.photoUrl}
-              onChange={(e) => setFormData({ ...formData, photoUrl: e.target.value })}
+              value={formData.imageUrl}
+              onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
               placeholder="https://exemplo.com/imagem.jpg"
             />
           </div>

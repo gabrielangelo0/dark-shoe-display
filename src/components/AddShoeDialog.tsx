@@ -53,8 +53,8 @@ export function AddShoeDialog({ onAddShoe }: AddShoeDialogProps) {
       price: data.price,
       size: data.size,
       color: data.color,
-      photoUrl: data.imageUrl,
-      stock: data.inStock,
+      imageUrl: data.imageUrl,
+      inStock: data.inStock,
     };
 
     await axios.post("http://localhost:3000/shoes", newShoe);

@@ -7,6 +7,5 @@ export interface Shoe {
   size: number;
   color: string;
   imageUrl?: string;
-  photoUrl?: string;
   inStock: boolean;
 }

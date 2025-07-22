@@ -108,7 +108,7 @@ export default function ShoeDetails() {
             <CardHeader className="p-0">
               <div className="aspect-square w-full overflow-hidden bg-secondary/50">
                 <img
-                  src={shoe.photoUrl || "/placeholder.svg"}
+                  src={shoe.imageUrl || "/placeholder.svg"}
                   alt={shoe.name}
                   className="h-full w-full object-cover"
                 />
